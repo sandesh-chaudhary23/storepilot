@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Env & secrets (never commit real credentials)
+.env
+**/.env
+!**/.env.example
+
+# Build output
+dist/
+**/dist/
+
+# Uploads (local image fallback)
+uploads/
+server/uploads/
+
+# Misc
+*.log
+.DS_Store
