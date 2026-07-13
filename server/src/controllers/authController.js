@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { User } from '../models/User.js';
 import { Business } from '../models/Business.js';
 import { ApiError, asyncHandler } from '../utils/ApiError.js';
-import { sendAuthCookie } from '../utils/token.js';
+import { sendAuthCookie, cookieOptions } from '../utils/token.js';
 import { sendEmail } from '../services/emailService.js';
 
 const publicUser = (u) => ({
@@ -52,7 +52,7 @@ export const login = asyncHandler(async (req, res) => {
 
 // POST /api/auth/logout
 export const logout = asyncHandler(async (_req, res) => {
-  res.clearCookie('token');
+  res.clearCookie('token', cookieOptions());
   res.json({ success: true, message: 'Logged out' });
 });
 

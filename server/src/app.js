@@ -20,6 +20,10 @@ import { notFound, errorHandler } from './middlewares/error.js';
 export function createApp() {
   const app = express();
 
+  // Behind Nginx in production: trust the first proxy so req.secure and the
+  // client IP (X-Forwarded-*) are read correctly, and Secure cookies are set.
+  if (process.env.NODE_ENV === 'production') app.set('trust proxy', 1);
+
   app.use(
     cors({
       origin: process.env.CLIENT_URL?.split(',') || 'http://localhost:5173',

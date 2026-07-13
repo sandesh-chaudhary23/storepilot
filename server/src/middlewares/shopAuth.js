@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { Business } from '../models/Business.js';
 import { Customer } from '../models/Customer.js';
 import { ApiError, asyncHandler } from '../utils/ApiError.js';
+import { cookieOptions } from '../utils/token.js';
 
 /** Resolves :slug -> req.store (the Business). Used by every shop route. */
 export const resolveStore = asyncHandler(async (req, _res, next) => {
@@ -19,12 +20,7 @@ export function signShopToken(customerId) {
 
 export function sendShopCookie(res, customerId) {
   const token = signShopToken(customerId);
-  res.cookie('shopToken', token, {
-    httpOnly: true,
-    secure: process.env.COOKIE_SECURE === 'true',
-    sameSite: 'lax',
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  });
+  res.cookie('shopToken', token, cookieOptions());
   return token;
 }
 

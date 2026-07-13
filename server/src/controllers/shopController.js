@@ -5,6 +5,7 @@ import { Order } from '../models/Order.js';
 import { asyncHandler, ApiError } from '../utils/ApiError.js';
 import { placeOrder } from '../services/orderService.js';
 import { sendShopCookie } from '../middlewares/shopAuth.js';
+import { cookieOptions } from '../utils/token.js';
 
 const publicCustomer = (c) => ({
   id: c._id,
@@ -101,7 +102,7 @@ export const loginCustomer = asyncHandler(async (req, res) => {
 
 // POST /api/shop/:slug/auth/logout
 export const logoutCustomer = asyncHandler(async (_req, res) => {
-  res.clearCookie('shopToken');
+  res.clearCookie('shopToken', cookieOptions());
   res.json({ success: true, message: 'Logged out' });
 });
 
